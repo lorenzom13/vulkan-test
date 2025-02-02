@@ -101,12 +101,36 @@ private:
 
     std::vector<VkImageView> swapChainImageViews;
 
+    VkRenderPass renderPass;
+    VkPipelineLayout pipelineLayout;
+
+    VkPipeline graphicsPipeline;
+
+    std::vector<VkFramebuffer> swapChainFramebuffers;
+
+    VkCommandPool commandPool;
+    VkCommandBuffer commandBuffer;
+
+    VkSemaphore imageAvailableSemaphore;
+    VkSemaphore renderFinishedSemaphore;
+    VkFence inFlightFence;
 
     void initWindow();
     void initVulkan();
 
     void createGraphicsPipeline();
     VkShaderModule createShaderModule(const std::vector<char>& code);
+
+    void createRenderPass();
+
+    void createFramebuffers();
+
+    void createCommandPool();
+
+    void createCommandBuffer();
+    void recordCommandBuffer(VkCommandBuffer commandBuffer, uint32_t imageIndex);
+
+    void createSyncObjects();
 
     void createImageViews();
 
@@ -127,6 +151,8 @@ private:
 
     void mainLoop();
     void cleanup();
+
+    void drawFrame();
 
     void createInstance();
     void populateDebugMessengerCreateInfo(VkDebugUtilsMessengerCreateInfoEXT& createInfo);
